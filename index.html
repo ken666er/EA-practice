@@ -1,0 +1,49 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EA Practice</title>
+<style>body{font-family:-apple-system,sans-serif;background:#111827;color:white;padding:20px;max-width:650px;margin:auto}.card{background:#1f2937;padding:22px;border-radius:18px;margin:15px 0}#q{font-size:24px;font-weight:700;line-height:1.4}#a{font-size:20px;line-height:1.5;color:#d1fae5}button{width:100%;padding:16px;margin:6px 0;border:0;border-radius:14px;font-size:18px;font-weight:700;background:#fbbf24;color:#111827}.dark{background:#374151;color:white}.hide{display:none}.row{display:flex;gap:10px}.row button{flex:1}small{color:#9ca3af}</style>
+<h1>EA Practice</h1><p>I ask the Q. You say the A.</p><small id="p"></small><div class="card"><div id="q"></div></div>
+<button id="read">🔊 Read Question</button><button class="dark" id="show">Show Answer</button><div id="ac" class="card hide"><div id="a"></div></div>
+<div class="row"><button class="dark" id="back">← Back</button><button id="next">Next →</button></div><button class="dark" id="reset">Start Over</button>
+<script>
+const qa=[
+["My brother, from whence come you as an Entered Apprentice?","From a lodge of the Holy Saints John of Jerusalem."],
+["What makes you a Mason?","My Obligation."],
+["How do you know yourself to be a Mason?","By being often tried, never denied and ready to be tried again."],
+["How shall I know you to be a Mason?","By certain Signs, a Token, a Word and the Perfect Points of my entrance."],
+["What are Signs?","Right angles, horizontals and perpendiculars."],
+["Give me a Sign.","Give the Due Guard of an Entered Apprentice."],
+["What is that?","The Due Guard of an Entered Apprentice."],
+["To what does it allude?","To the position in which my hands were placed when taking the Obligation."],
+["Give me another Sign.","Give the Penal Sign of an Entered Apprentice."],
+["What is that?","The Penal Sign of an Entered Apprentice."],
+["To what does it allude?","To the symbolic penalty referred to in my Obligation."],
+["What is a Token?","A certain friendly or brotherly grip, whereby one Mason may know Another in the dark as well as in the light."],
+["I hele.","I conceal."],
+["What do you conceal?","All the secrets of Masons and Masonry, except it be from him or them to whom they of right belong."],
+["What is that?","A Grip."],["What Grip?","The Grip of an Entered Apprentice."],["Has it a name?","It has."],
+["Give it to me.","I did not so receive it, neither may I so impart it."],
+["What will you do that I may obtain a knowledge of it?","I will letter it, or divide it with you."],
+["Letter it and begin.","Begin you."],["Nay, the word is yours, you must begin.","B"],["Divide it and begin.","BO"],
+["What are the perfect points of your entrance?","The Gutteral, alluding to the throat; the Pectoral, alluding to the breast; the Manual, alluding to hands; and the Pedal, alluding to the feet."],
+["What do they represent?","The four cardinal virtues; Temperance, Fortitude, Prudence and Justice."],
+["Where were you first prepared to be made a Mason?","In my heart."],
+["Where next?","In a room adjacent to a just and lawfully constituted Lodge of Masons."],
+["How were you prepared?","By being divested of all minerals and metals; neither Naked nor Clothed, Barefoot nor Shod; Hoodwinked and with a Cable Tow around my Neck; my Left Arm, Left Breast and Left Knee bare; in which condition I was led to the door of the Lodge by a friend, whom I afterwards found to be a brother."],
+["How gained you admission?","By three distinct knocks."],
+["How were you received?","On the point of a sharp instrument applied to my Naked Left Breast, which was to teach me that, as the instrument was a torture to my flesh, so should the recollection of it ever be to my conscience should I presume to reveal the secrets of Masonry unlawfully."],
+["How were you then disposed of?","I was conducted to the center of the Lodge, caused to kneel and attend prayer."],
+["After attending prayer, what were you asked?","In whom I put my trust."],["Your answer?","In God."],
+["What were you then told?","My trust being in God, my faith was well founded."],
+["What did the Worshipful Master do with you?","He made me an Entered Apprentice in due and ancient form."],
+["On being brought to light for the first time in a Lodge of Entered Apprentices, what did you observe on the Altar before you?","The Three Great Lights in Masonry, by the aid of the representatives of the Three Lesser Lights."],
+["What are the Three Great Lights in Masonry?","The Holy Bible, Square and Compasses."],
+["How are they explained?","The Holy Bible is a rule and guide to faith, the Square to square our actions, and the Compasses to circumscribe our desires and keep our passions in due bounds with all mankind, more especially with our Brethren in Masonry."],
+["What are the Three Lesser Lights?","The Sun, the Moon and the Worshipful Master."],
+["How does an Entered Apprentice wear his apron?","With the flap turned up."],
+["Where were you then placed?","In the North East corner of the Lodge as the youngest Entered Apprentice, my feet forming the angle of an oblong Square, my body erect to the worshipful Master in the East."],
+["With what were you then presented?","With the working tools of an Entered Apprentice."],
+["What are the working tools of an Entered Apprentice?","The Twenty-four inch Gauge and the Common Gavel."],
+["How were you then disposed of?","I was ordered to be conducted to the place from whence I came, there to be invested with that of which I had been divested, and return to the Lodge for further instruction."]
+];let i=+(localStorage.eai||0);const Q=document.getElementById("q"),A=document.getElementById("a"),AC=document.getElementById("ac"),P=document.getElementById("p");
+function r(){if(i>=qa.length)i=0;Q.textContent=qa[i][0];A.textContent=qa[i][1];P.textContent=`Question ${i+1} of ${qa.length}`;AC.classList.add("hide");localStorage.eai=i}
+read.onclick=()=>{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(qa[i][0]);u.rate=.82;speechSynthesis.speak(u)};show.onclick=()=>AC.classList.remove("hide");next.onclick=()=>{i=(i+1)%qa.length;r()};back.onclick=()=>{i=(i-1+qa.length)%qa.length;r()};reset.onclick=()=>{i=0;r()};r();
+</script>
