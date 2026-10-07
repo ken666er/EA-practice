@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>EA Line Practice</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f3f5f8}
+body{margin:0;padding:22px 16px 40px}.app{max-width:650px;margin:auto}
+h1{font-size:30px;margin:10px 0 4px}.sub{color:#667085;margin:0 0 18px}
+.card{background:#fff;border-radius:22px;padding:22px;box-shadow:0 5px 25px #00000012}
+.progress{font-size:14px;color:#667085;font-weight:700}.q{font-size:25px;line-height:1.25;margin:18px 0}
+.answer{font-size:20px;line-height:1.45;background:#eef7ee;border-radius:16px;padding:16px;margin:15px 0;display:none}
+.hint{font-size:19px;font-weight:700;min-height:28px;margin:12px 0}
+button{border:0;border-radius:15px;padding:16px 12px;font-size:17px;font-weight:750}
+.primary{background:#172033;color:white;width:100%;margin:6px 0 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.secondary{background:#e7ebf1;color:#172033}.good{background:#dff3e3;color:#174d24}
+.note{font-size:14px;color:#667085;line-height:1.4;margin-top:18px}
+select{width:100%;font-size:17px;padding:12px;border-radius:12px;border:1px solid #ccd2da;background:white;margin-bottom:14px}
+</style></head>
+<body><main class="app">
+<h1>EA Line Practice</h1><p class="sub">I ask the question. You say the answer.</p>
+<div class="card">
+<select id="section"><option value="exam">EA Exam</option><option value="obligation">Obligation practice</option></select>
+<div class="progress" id="progress"></div><div class="q" id="q"></div>
+<button class="primary" onclick="speakQ()">🔊 Read Question</button>
+<div class="hint" id="hint"></div><div class="answer" id="answer"></div>
+<div class="grid">
+<button class="secondary" onclick="hint()">Hint</button><button class="secondary" onclick="showAnswer()">Show Answer</button>
+<button class="secondary" onclick="prev()">← Back</button><button class="good" onclick="next()">Next →</button>
+</div>
+</div><p class="note">Tip: say your answer out loud before tapping “Show Answer.” Safari’s voice may sound slightly different depending on your iPhone settings.</p>
+</main>
+<script>
+const exam=[
+["My brother, from whence come you as an Entered Apprentice?","From a lodge of the Holy Saints John of Jerusalem."],
+["What makes you a Mason?","My Obligation."],
+["How do you know yourself to be a Mason?","By being often tried, never denied and ready to be tried again."],
+["How shall I know you to be a Mason?","By certain Signs, a Token, a Word and the Perfect Points of my entrance."],
+["What are Signs?","Right angles, horizontals and perpendiculars."],
+["Give me a Sign.","Give the Due Guard of an Entered Apprentice."],
+["What is that?","The Due Guard of an Entered Apprentice."],
+["To what does it allude?","To the position in which my hands were placed when taking the Obligation."],
+["Give me another Sign.","Give the Penal Sign of an Entered Apprentice."],
+["What is that?","The Penal Sign of an Entered Apprentice."],
+["To what does it allude?","To the symbolic penalty referred to in my Obligation."],
+["What is a Token?","A certain friendly or brotherly grip, whereby one Mason may know another in the dark as well as in the light."],
+["I hele.","I conceal."],
+["What do you conceal?","All the secrets of Masons and Masonry, except it be from him or them to whom they of right belong."],
+["What is that?","A Grip."],
+["What Grip?","The Grip of an Entered Apprentice."],
+["Has it a name?","It has."],
+["Give it to me.","I did not so receive it, neither may I so impart it."],
+["What will you do that I may obtain a knowledge of it?","I will letter it, or divide it with you."],
+["Letter it and begin.","Begin you."],
+["Nay, the word is yours, you must begin.","B"],
+["Divide it and begin.","BO"],
+["What are the perfect points of your entrance?","The Gutteral, alluding to the throat; the Pectoral, alluding to the breast; the Manual, alluding to hands; and the Pedal, alluding to the feet."],
+["What do they represent?","The four cardinal virtues; Temperance, Fortitude, Prudence and Justice."],
+["Where were you first prepared to be made a Mason?","In my heart."],
+["Where next?","In a room adjacent to a just and lawfully constituted Lodge of Masons."],
+["How were you prepared?","By being divested of all minerals and metals; neither Naked nor Clothed, Barefoot nor Shod; Hoodwinked and with a Cable Tow around my Neck; my Left Arm, Left Breast and Left Knee bare; in which condition I was led to the door of the Lodge by a friend, whom I afterwards found to be a brother."],
+["How gained you admission?","By three distinct knocks."],
+["How were you then disposed of?","I was conducted to the center of the Lodge, caused to kneel and attend prayer."],
+["After attending prayer, what were you asked?","In whom I put my trust."],
+["Your answer?","In God."],
+["What were you then told?","My trust being in God, my faith was well founded."],
+["What did the Worshipful Master do with you?","He made me an Entered Apprentice in due and ancient form."],
+["What are the Three Great Lights in Masonry?","The Holy Bible, Square and Compasses."],
+["How are they explained?","The Holy Bible is a rule and guide to faith, the Square to square our actions, and the Compasses to circumscribe our desires and keep our passions in due bounds with all mankind, more especially with our Brethren in Masonry."],
+["What are the Three Lesser Lights?","The Sun, the Moon and the Worshipful Master."],
+["How does an Entered Apprentice wear his apron?","With the flap turned up."],
+["Where were you then placed?","In the North East corner of the Lodge as the youngest Entered Apprentice, my feet forming the angle of an oblong Square, my body erect to the Worshipful Master in the East."],
+["With what were you then presented?","With the working tools of an Entered Apprentice."],
+["What are the working tools of an Entered Apprentice?","The Twenty-four inch Gauge and the Common Gavel."]
+];
+const obligation=[
+["Begin the Entered Apprentice Obligation.","I, (state your full name), of my own free will and accord, in the presence of Almighty God and this Worshipful Lodge..."],
+["Continue from: “I furthermore promise and swear...”","I furthermore promise and swear, that I will not write these secrets, print, paint, stamp, stain, cut, carve, hew, mark or engrave them..."],
+["Continue from: “To all this...”","To all this I most solemnly and sincerely Promise and Swear, with a firm and steadfast resolution to keep and perform the same..."],
+["Finish the Obligation.","So Help Me God and keep me steadfast in the due performance of the same."]
+];
+let i=0,h=0;
+const $=id=>document.getElementById(id);
+function data(){return $("section").value==="exam"?exam:obligation}
+function render(auto=false){let d=data(),x=d[i];$("progress").textContent=`Question ${i+1} of ${d.length}`;$("q").textContent=x[0];$("answer").textContent=x[1];$("answer").style.display="none";$("hint").textContent="";h=0;if(auto)speakQ()}
+function speakQ(){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(data()[i][0]);u.rate=.9;speechSynthesis.speak(u)}
+function hint(){let a=data()[i][1].split(/\s+/);h=Math.min(a.length,h+Math.max(1,Math.ceil(a.length*.12)));$("hint").textContent="Hint: "+a.slice(0,h).join(" ")+" …"}
+function showAnswer(){$("answer").style.display="block"}
+function next(){i=(i+1)%data().length;render(true)}
+function prev(){i=(i-1+data().length)%data().length;render()}
+$("section").onchange=()=>{i=0;render()};render();
+</script></body></html>
